@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopKart Fashion - Dresses & Apparel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">
+            ShopKart
+            <span>Fashion ⚡</span>
+        </a>
+        <div class="search-box">
+            <input type="text" placeholder="Search for ethnic wear, tops, footwear, and more">
+        </div>
+        <div class="nav-links">
+            <a href="products.html">All Products</a>
+            <a href="cart.html" class="cart-btn">Cart (<span id="cart-count">0</span>)</a>
+        </div>
+    </header>
+
+    <div class="categories-bar">
+        <a href="products.html?category=Ethnic Wear" class="category-item">Ethnic Wear</a>
+        <a href="products.html?category=Western Dresses" class="category-item">Western Dresses</a>
+        <a href="products.html?category=Casual Tops" class="category-item">Casual Tops</a>
+        <a href="products.html?category=Footwear" class="category-item">Footwear</a>
+    </div>
+
+    <div class="container">
+        <div class="hero-banner">
+            <h1>Big Fashion Festival</h1>
+            <p>Min. 50% - 80% OFF on Women's Wear & Footwear</p>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <span>Featured Collection</span>
+                <a href="products.html" class="btn-orange" style="text-decoration:none; padding: 6px 16px; font-size: 13px;">VIEW ALL</a>
+            </div>
+            <div id="featured-grid" class="product-grid"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        fetch('/api/products')
+            .then(res => res.json())
+            .then(products => {
+                const grid = document.getElementById('featured-grid');
+                grid.innerHTML = products.map(p => `
+                    <div class="product-card">
+                        <div>
+                            <div class="image-wrapper">
+                                <img src="${p.image}" alt="${p.title}">
+                            </div>
+                            <div class="product-title">${p.title}</div>
+                            <div class="rating-badge">★ ${p.rating}</div>
+                            <div class="price-row">
+                                <span class="current-price">₹${p.price.toLocaleString('en-IN')}</span>
+                                <span class="original-price">₹${p.originalPrice.toLocaleString('en-IN')}</span>
+                                <span class="discount-badge">${p.discount}</span>
+                            </div>
+                        </div>
+                        <button class="btn-yellow" onclick='addToCart(${JSON.stringify(p)})'>Add to Cart</button>
+                    </div>
+                `).join('');
+            });
+    </script>
+</body>
+</html>

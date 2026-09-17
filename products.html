@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - ShopKart</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .filter-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 12px 20px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .filter-section select {
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+        .btn-buy-now {
+            background-color: #fb641b;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            font-weight: 600;
+            border-radius: 2px;
+            cursor: pointer;
+            margin-top: 6px;
+            width: 100%;
+        }
+        .btn-buy-now:hover {
+            background-color: #e55613;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">ShopKart <span>Fashion ⚡</span></a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="cart.html" class="cart-btn">Cart (<span id="cart-count">0</span>)</a>
+        </div>
+    </header>
+
+    <div class="categories-bar">
+        <a href="products.html" class="category-item">All Items</a>
+        <a href="products.html?category=Ethnic Wear" class="category-item">Ethnic Wear</a>
+        <a href="products.html?category=Western Dresses" class="category-item">Western Dresses</a>
+        <a href="products.html?category=Casual Tops" class="category-item">Casual Tops</a>
+        <a href="products.html?category=Footwear" class="category-item">Footwear</a>
+    </div>
+
+    <div class="container" style="margin-top: 20px;">
+        <!-- Price Filter Bar -->
+        <div class="filter-section">
+            <label for="price-filter"><strong>Filter by Price:</strong></label>
+            <select id="price-filter" onchange="applyFilters()">
+                <option value="all">All Prices</option>
+                <option value="0-1000">Under ₹1,000</option>
+                <option value="1000-2000">₹1,000 - ₹2,000</option>
+                <option value="2000-3000">₹2,000 - ₹3,000</option>
+                <option value="3000-10000">Above ₹3,000</option>
+            </select>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <span id="category-title">All Collection</span>
+            </div>
+            <div id="all-products-grid" class="product-grid"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentCategory = urlParams.get('category');
+        
+        if (currentCategory) {
+            document.getElementById('category-title').textContent = currentCategory;
+        }
+
+        function applyFilters() {
+            const priceVal = document.getElementById('price-filter').value;
+            let queryParams = [];
+
+            if (currentCategory) {
+                queryParams.push(`category=${encodeURIComponent(currentCategory)}`);
+            }
+
+            if (priceVal !== 'all') {
+                const [min, max] = priceVal.split('-');
+                if (min) queryParams.push(`minPrice=${min}`);
+                if (max) queryParams.push(`maxPrice=${max}`);
+            }
+
+            const queryString = queryParams.length ? `?${queryParams.join('&')}` : '';
+            loadProducts(`/api/products${queryString}`);
+        }
+
+        function loadProducts(endpoint) {
+            fetch(endpoint)
+                .then(res => res.json())
+                .then(products => {
+                    const grid = document.getElementById('all-products-grid');
+                    if (products.length === 0) {
+                        grid.innerHTML = "<p style='padding:20px;'>No products found matching your filter criteria.</p>";
+                        return;
+                    }
+                    grid.innerHTML = products.map(p => `
+                        <div class="product-card">
+                            <div>
+                                <div class="image-wrapper">
+                                    <img src="${p.image}" alt="${p.title}">
+                                </div>
+                                <div class="product-title">${p.title}</div>
+                                <div class="rating-badge">★ ${p.rating}</div>
+                                <div class="price-row">
+                                    <span class="current-price">₹${p.price.toLocaleString('en-IN')}</span>
+                                    <span class="original-price">₹${p.originalPrice.toLocaleString('en-IN')}</span>
+                                </div>
+                            </div>
+                            <div style="margin-top: 10px;">
+                                <button class="btn-yellow" onclick='addToCart(${JSON.stringify(p)})'>Add to Cart</button>
+                                <button class="btn-buy-now" onclick='buyNow(${JSON.stringify(p)})'>Buy Now</button>
+                            </div>
+                        </div>
+                    `).join('');
+                });
+        }
+
+        // Initial fetch
+        applyFilters();
+    </script>
+</body>
+</html>
