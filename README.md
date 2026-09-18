@@ -166,8 +166,6 @@ Add your project screenshots here:
 <img width="1487" height="921" alt="image" src="https://github.com/user-attachments/assets/60bd33dd-f847-49e8-a824-ea77d3efc2fc" />
 
 
-![Products Page](screenshots/products.png)
-
 ![Product Details](screenshots/product.png)
 <img width="901" height="719" alt="image" src="https://github.com/user-attachments/assets/0a3cf743-db2d-464f-b95c-7d3df0530856" />
 
