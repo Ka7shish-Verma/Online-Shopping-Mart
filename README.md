@@ -162,19 +162,18 @@ Add your project screenshots here:
 
 
 
-![Home Page](screenshots/home.png)
+# [Home Page](screenshots/home.png)
 <img width="1487" height="921" alt="image" src="https://github.com/user-attachments/assets/60bd33dd-f847-49e8-a824-ea77d3efc2fc" />
 
 
-![Product Details](screenshots/product.png)
+# [Product Details](screenshots/product.png)
 <img width="901" height="719" alt="image" src="https://github.com/user-attachments/assets/0a3cf743-db2d-464f-b95c-7d3df0530856" />
 
 
-![Cart](screenshots/cart.png)
+# [Cart](screenshots/cart.png)
 <img width="877" height="470" alt="image" src="https://github.com/user-attachments/assets/20be543e-d8a3-48e7-9a92-85583b804411" />
 
 
-![Checkout](screenshots/checkout.png)
 <img width="492" height="297" alt="image" src="https://github.com/user-attachments/assets/538a0c22-916e-4459-b4a4-0ee551e12dc2" />
 
 ## 🎯 Project Objective
