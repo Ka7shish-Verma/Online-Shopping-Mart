@@ -2,7 +2,7 @@
 
 ShopKart is a full-stack online shopping website developed using **HTML, CSS, JavaScript, Node.js, Express.js, and MongoDB**. It provides a simple e-commerce experience where users can browse products, view product details, add products to the cart, and place orders.
 
-## 🚀 Features
+# 🚀 Features
 
 * 🏠 Attractive home page
 * 🔍 Product search
